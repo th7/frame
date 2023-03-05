@@ -3,9 +3,9 @@ set -euo pipefail
 
 if [ ${1:-''} == 'WRITE' ]; then
   sudo apt update
-  sudo apt upgrade
+  sudo apt upgrade -y
 
-  sudo apt install openssh-server
+  sudo apt install -y openssh-server
   sudo systemctl enable --now ssh
 
   sudo apt install -y ruby
