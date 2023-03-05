@@ -18,7 +18,7 @@ if [ ${1:-''} == 'WRITE' ]; then
   sudo mount -a
 
   sudo crontab -l > ~/crontab.bak-$(date +%s)
-  sudo crontab -l || true | bin/crontab | sudo crontab -
+  sudo crontab -l | bin/crontab | sudo crontab -
 
   touch ~/frame-slideshow
   chmod 0700 ~/frame-slideshow
@@ -35,7 +35,7 @@ else
   echo
 
   echo 'sudo crontab -l | bin/crontab | sudo crontab -'
-  sudo crontab -l || true | bin/crontab
+  sudo crontab -l | bin/crontab
   echo
 
   echo '~/frame-slideshow'
