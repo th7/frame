@@ -11,7 +11,10 @@ if [ ${1:-''} == 'WRITE' ]; then
   sudo apt install -y ruby
 
   sudo mkdir -p $(bin/fstab-mnt-path)
-  sudo sh -c 'bin/fstab > /etc/fstab'
+
+  sudo cp /etc/fstab /etc/fstab.bak-$(date +%s)
+  sudo sh -c 'bin/fstab > fstab.tmp'
+  sudo mv fstab.tmp /etc/fstab
   sudo mount -a
 
   sudo crontab -l || true | bin/crontab | sudo crontab -
