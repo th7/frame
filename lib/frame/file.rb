@@ -19,27 +19,19 @@ module Frame
         if existing_lines.empty?
           new_frame_section(intended_lines)
         else
-          append_empty(before_lines(existing_lines)) + \
-            new_frame_section(intended_lines) + \
-            prepend_empty(after_lines(existing_lines))
+          ensure_trailing_empty(before_lines(existing_lines)) + \
+            ensure_trailing_empty(new_frame_section(intended_lines)) + \
+            after_lines(existing_lines)
         end
       end
 
       private
 
-      def append_empty(lines)
-        if lines.empty?
+      def ensure_trailing_empty(lines)
+        if lines.empty? || lines.last == ''
           lines
         else
           lines + ['']
-        end
-      end
-
-      def prepend_empty(lines)
-        if lines.empty?
-          lines
-        else
-          [''] + lines
         end
       end
 
