@@ -8,7 +8,7 @@ module Frame
     class << self
       def readlines(path)
         if ::File.exist?(path)
-          ::File.readlines(path)
+          ::File.readlines(path).map(&:chomp)
         else
           []
         end

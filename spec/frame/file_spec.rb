@@ -10,10 +10,10 @@ RSpec.describe Frame::File do
 
     before do
       allow(File).to receive(:exist?).with('/some/path').and_return(file_exists)
-      allow(File).to receive(:readlines).with('/some/path').and_return('fake lines')
+      allow(File).to receive(:readlines).with('/some/path').and_return(%W[fake\n lines\n])
     end
 
-    it { is_expected.to eq('fake lines') }
+    it { is_expected.to eq(%w[fake lines]) }
 
     context 'when file does not exist' do
       let(:file_exists) { false }
