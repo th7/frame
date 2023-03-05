@@ -11,7 +11,7 @@ RSpec.describe Frame::Crontab do
 
     before do
       allow(Frame::Config).to receive(:crontab).and_return(crontab)
-      allow(Frame::File).to receive(:combine).with('/etc/crontab', [crontab]).and_return(%w[fake result])
+      allow(Frame::File).to receive(:combine).with('/dev/stdin', [crontab]).and_return(%w[fake result])
     end
 
     it { is_expected.to eq("fake\nresult") }

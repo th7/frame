@@ -7,7 +7,7 @@ module Frame
   module Crontab
     class << self
       def generate
-        Frame::File.combine('/etc/crontab', [Frame::Config.crontab]).join("\n")
+        Frame::File.combine('/dev/stdin', [Frame::Config.crontab]).join("\n")
       end
 
       private

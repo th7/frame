@@ -13,7 +13,7 @@ if [ ${1:-''} == 'WRITE' ]; then
   sudo sh -c 'bin/fstab > /etc/fstab'
   sudo mount -a
 
-  sudo sh -c 'bin/crontab > /etc/crontab'
+  sudo crontab -l | bin/crontab | sudo crontab -
 
   touch ~/frame-slideshow
   chmod 0700 ~/frame-slideshow
@@ -25,8 +25,8 @@ else
   bin/fstab
   echo
 
-  echo '/etc/crontab'
-  bin/crontab
+  echo 'sudo crontab -l | bin/crontab | sudo crontab -'
+  sudo crontab -l | bin/crontab
   echo
 
   echo '~/frame-slideshow'
