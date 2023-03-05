@@ -10,10 +10,11 @@ if [ ${1:-''} == 'WRITE' ]; then
 
   sudo apt install -y ruby
 
+  sudo mkdir -p $(bin/fstab-mnt-path)
   sudo sh -c 'bin/fstab > /etc/fstab'
   sudo mount -a
 
-  sudo crontab -l | bin/crontab | sudo crontab -
+  sudo crontab -l || true | bin/crontab | sudo crontab -
 
   touch ~/frame-slideshow
   chmod 0700 ~/frame-slideshow
@@ -21,12 +22,16 @@ if [ ${1:-''} == 'WRITE' ]; then
 
   bin/autostart > ~/.config/autostart/frame-slideshow.desktop
 else
+  echo 'sudo mkdir -p $(bin/fstab-mnt-path)'
+  bin/fstab-mnt-path
+  echo
+
   echo '/etc/fstab'
   bin/fstab
   echo
 
   echo 'sudo crontab -l | bin/crontab | sudo crontab -'
-  sudo crontab -l | bin/crontab
+  sudo crontab -l || true | bin/crontab
   echo
 
   echo '~/frame-slideshow'

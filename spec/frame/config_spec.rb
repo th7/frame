@@ -29,6 +29,18 @@ RSpec.describe Frame::Config do
     it { is_expected.to eq('1 2 3 4 5 rtcwake -m off -s 12345') }
   end
 
+  describe '.fstab_mount_path' do
+    subject { described_class.fstab_mount_path }
+
+    let(:config) { { source: { smb_server: 'smb.local', smb_share: 'share' } } }
+
+    before do
+      allow(described_class).to receive(:load).and_return(config)
+    end
+
+    it { is_expected.to eq('/mnt/smb.local/share') }
+  end
+
   describe '.fstab' do
     subject { described_class.fstab }
 
@@ -38,7 +50,9 @@ RSpec.describe Frame::Config do
       allow(described_class).to receive(:load).and_return(config)
     end
 
-    it { is_expected.to eq('//smb.local/share /mnt/smb.local/share cifs username=root,password= 0 0') }
+    it 'creates the dir and configures fstab' do
+      expect(subject).to eq('//smb.local/share /mnt/smb.local/share cifs username=root,password= 0 0')
+    end
   end
 
   describe '.slideshow' do

@@ -10,8 +10,12 @@ module Frame
         "#{config[:schedule][:off_cron]} rtcwake -m off -s #{config[:schedule][:on_seconds_later]}"
       end
 
+      def fstab_mount_path
+        "/mnt/#{smb_path}"
+      end
+
       def fstab
-        "//#{smb_path} /mnt/#{smb_path} cifs username=root,password= 0 0"
+        "//#{smb_path} #{fstab_mount_path} cifs username=root,password= 0 0"
       end
 
       def slideshow
