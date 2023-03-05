@@ -11,13 +11,13 @@ module Frame
       end
 
       def fstab
-        "//#{path} /mnt/#{path} cifs username=root,password= 0 0"
+        "//#{smb_path} /mnt/#{smb_path} cifs username=root,password= 0 0"
       end
 
       def slideshow
         'feh --auto-rotate --hide-pointer --borderless ' \
           '--quiet --slideshow-delay 7 --reload 60 --image-bg black ' \
-          "--fullscreen --auto-zoom --randomize --recursive /mnt/#{path}"
+          "--fullscreen --auto-zoom --randomize --recursive /mnt/#{::File.join(smb_path, sub_path)}"
       end
 
       def load
@@ -26,8 +26,12 @@ module Frame
 
       private
 
-      def path
-        ::File.join(config.dig(:source, :smb_server), config.dig(:source, :smb_path))
+      def smb_path
+        ::File.join(config.dig(:source, :smb_server), config.dig(:source, :smb_share))
+      end
+
+      def sub_path
+        config.dig(:source, :path)
       end
 
       def config

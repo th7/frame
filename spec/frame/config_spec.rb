@@ -32,23 +32,23 @@ RSpec.describe Frame::Config do
   describe '.fstab' do
     subject { described_class.fstab }
 
-    let(:config) { { source: { smb_server: 'smb.local', smb_path: '/some/path' } } }
+    let(:config) { { source: { smb_server: 'smb.local', smb_share: 'share' } } }
 
     before do
       allow(described_class).to receive(:load).and_return(config)
     end
 
-    it { is_expected.to eq('//smb.local/some/path /mnt/smb.local/some/path cifs username=root,password= 0 0') }
+    it { is_expected.to eq('//smb.local/share /mnt/smb.local/share cifs username=root,password= 0 0') }
   end
 
   describe '.slideshow' do
     subject { described_class.slideshow }
 
-    let(:config) { { source: { smb_server: 'smb.local', smb_path: '/some/path' } } }
+    let(:config) { { source: { smb_server: 'smb.local', smb_share: 'share', path: 'some/path' } } }
     let(:expected) do
       'feh --auto-rotate --hide-pointer --borderless ' \
         '--quiet --slideshow-delay 7 --reload 60 --image-bg black ' \
-        '--fullscreen --auto-zoom --randomize --recursive /mnt/smb.local/some/path'
+        '--fullscreen --auto-zoom --randomize --recursive /mnt/smb.local/share/some/path'
     end
 
     before do
