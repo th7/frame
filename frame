@@ -2,9 +2,6 @@
 set -euo pipefail
 
 if [ ${1:-''} == 'WRITE' ]; then
-  sudo apt update
-  sudo apt upgrade -y
-
   sudo apt install -y openssh-server
   sudo systemctl enable --now ssh
 
