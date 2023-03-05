@@ -3,8 +3,27 @@
 require 'frame/file'
 
 RSpec.describe Frame::File do
-  describe '.upsert' do
-    subject { described_class.upsert(existing_lines, intended_lines) }
+  describe '.readlines' do
+    subject { described_class.readlines('/some/path') }
+
+    let(:file_exists) { true }
+
+    before do
+      allow(File).to receive(:exist?).with('/some/path').and_return(file_exists)
+      allow(File).to receive(:readlines).with('/some/path').and_return('fake lines')
+    end
+
+    it { is_expected.to eq('fake lines') }
+
+    context 'when file does not exist' do
+      let(:file_exists) { false }
+
+      it { is_expected.to eq([]) }
+    end
+  end
+
+  describe '.combine' do
+    subject { described_class.combine('/fake/path', intended_lines) }
 
     let(:intended_lines) { ['line 1', 'line 2'] }
     let(:existing_lines) { [] }
@@ -15,6 +34,10 @@ RSpec.describe Frame::File do
         'line 2',
         described_class::END_COMMENT
       ]
+    end
+
+    before do
+      allow(described_class).to receive(:readlines).with('/fake/path').and_return(existing_lines)
     end
 
     it 'surrounds the intended_lines with comments' do

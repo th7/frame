@@ -6,7 +6,16 @@ module Frame
     END_COMMENT = '# END MANAGED BY https://github.com/th7/frame'
 
     class << self
-      def upsert(existing_lines, intended_lines)
+      def readlines(path)
+        if ::File.exist?(path)
+          ::File.readlines(path)
+        else
+          []
+        end
+      end
+
+      def combine(path, intended_lines)
+        existing_lines = readlines(path)
         if existing_lines.empty?
           new_frame_section(intended_lines)
         else

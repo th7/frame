@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+lib_path = File.expand_path(File.join(__dir__, '..', 'lib'))
+$LOAD_PATH << lib_path unless $LOAD_PATH.include?(lib_path)
+
+require 'frame/slideshow'
+
+puts Frame::Slideshow.generate

@@ -1,0 +1,6 @@
+source:
+  smb_server: personalcloud.local
+  smb_path: public
+schedule:
+  off_cron: 0 20 * * *
+  on_seconds_later: 40000
