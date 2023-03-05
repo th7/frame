@@ -1,13 +1,41 @@
 #!/usr/bin/env sh
 set -euo pipefail
 
-sudo apt install -y ruby
+if [ ${1:-''} == 'WRITE' ]; then
+  sudo apt update
+  sudo apt upgrade
 
-sudo sh -c 'bin/fstab > /etc/fstab'
-sudo mount -a
+  sudo apt install openssh-server
+  sudo systemctl enable --now ssh
 
-sudo sh -c 'bin/crontab > /etc/crontab'
+  sudo apt install -y ruby
 
-# teamviewer install
+  sudo sh -c 'bin/fstab > /etc/fstab'
+  sudo mount -a
 
-# startup
+  sudo sh -c 'bin/crontab > /etc/crontab'
+
+  touch ~/frame-slideshow
+  chmod 0700 ~/frame-slideshow
+  bin/slideshow > ~/frame-slideshow
+
+  bin/autostart > ~/.config/autostart/frame-slideshow.desktop
+else
+  echo '/etc/fstab'
+  bin/fstab
+  echo
+
+  echo '/etc/crontab'
+  bin/crontab
+  echo
+
+  echo '~/frame-slideshow'
+  bin/slideshow
+  echo
+
+  echo '~/.config/autostart/frame-slideshow.desktop'
+  bin/autostart
+fi
+
+# TODO
+# auto login (/etc/gdm3/custom.conf)

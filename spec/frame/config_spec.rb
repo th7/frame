@@ -57,4 +57,30 @@ RSpec.describe Frame::Config do
 
     it { is_expected.to eq(expected) }
   end
+
+  describe '.autostart' do
+    subject { described_class.autostart }
+
+    let(:expected) do
+      <<~TEXT
+        [Desktop Entry]
+        Type=Application
+        Exec=/home/fake-user/frame-slideshow &>> /home/fake-user/frame-slideshow.log
+        Hidden=false
+        NoDisplay=false
+        X-GNOME-Autostart-enabled=true
+        Name[en_US]=Frame Slideshow
+        Name=Frame Slideshow
+        Comment[en_US]=Managed by https://github.com/th7/frame
+        Comment=Managed by https://github.com/th7/frame
+      TEXT
+    end
+
+    before do
+      allow(ENV).to receive(:fetch).with('USER').and_return('fake-user')
+      # allow(described_class).to receive(:load).and_return(config)
+    end
+
+    it { is_expected.to eq(expected) }
+  end
 end
