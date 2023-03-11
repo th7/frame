@@ -61,7 +61,7 @@ RSpec.describe Frame::Config do
     let(:config) { { source: { smb_server: 'smb.local', smb_share: 'share', path: 'some/path' } } }
     let(:expected) do
       'feh --auto-rotate --hide-pointer --borderless ' \
-        '--quiet --slideshow-delay 7 --reload 60 --image-bg black ' \
+        '--quiet --slideshow-delay 12 --reload 60 --image-bg black ' \
         '--fullscreen --auto-zoom --randomize --recursive /mnt/smb.local/share/some/path'
     end
 
