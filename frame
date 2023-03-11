@@ -2,6 +2,7 @@
 set -euo pipefail
 
 if [ ${1:-''} == 'WRITE' ]; then
+  gsettings set org.gnome.desktop.notifications show-banners false
   sudo apt install -y openssh-server cifs-utils
   sudo systemctl enable --now ssh
 
