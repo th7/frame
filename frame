@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [ ${1:-''} == 'WRITE' ]; then
-  sudo apt install -y openssh-server
+  sudo apt install -y openssh-server cifs-utils
   sudo systemctl enable --now ssh
 
   sudo apt install -y ruby
