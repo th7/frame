@@ -1,0 +1,7 @@
+source:
+  smb_server: myserver.local
+  smb_share: public
+  path: path/to/pictures
+schedule:
+  off_cron: 0 20 * * *
+  on_seconds_later: 40000
