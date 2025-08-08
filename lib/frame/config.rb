@@ -40,6 +40,9 @@ module Frame
           Restart=always
           RestartSec=10
           User=#{ENV.fetch('USER')}
+
+          [Install]
+          WantedBy=multi-user.target
         TEXT
       end
 

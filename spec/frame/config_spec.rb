@@ -86,6 +86,9 @@ RSpec.describe Frame::Config do
         Restart=always
         RestartSec=10
         User=fake-user
+
+        [Install]
+        WantedBy=multi-user.target
       TEXT
     end
 
