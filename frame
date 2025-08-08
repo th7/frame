@@ -22,7 +22,10 @@ if [ ${1:-''} == 'WRITE' ]; then
   chmod 0700 ~/frame-slideshow
   bin/slideshow > ~/frame-slideshow
 
-  bin/autostart > ~/.config/autostart/frame-slideshow.desktop
+  sudo sh -c 'bin/systemd > systemd.tmp'
+  sudo mv systemd.tmp /etc/systemd/system/frame-slideshow.service
+  sudo systemctl daemon-reload
+  sudo systemctl enable --now frame-slideshow.service
 else
   echo 'sudo mkdir -p $(bin/fstab-mnt-path)'
   bin/fstab-mnt-path
@@ -40,8 +43,9 @@ else
   bin/slideshow
   echo
 
-  echo '~/.config/autostart/frame-slideshow.desktop'
-  bin/autostart
+  echo '/etc/systemd/system/frame-slideshow.service'
+  bin/systemd
+  echo
 fi
 
 # TODO

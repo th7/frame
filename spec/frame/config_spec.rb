@@ -72,21 +72,20 @@ RSpec.describe Frame::Config do
     it { is_expected.to eq(expected) }
   end
 
-  describe '.autostart' do
-    subject { described_class.autostart }
+  describe '.systemd' do
+    subject { described_class.systemd }
 
     let(:expected) do
       <<~TEXT
-        [Desktop Entry]
-        Type=Application
-        Exec=/home/fake-user/frame-slideshow &>> /home/fake-user/frame-slideshow.log
-        Hidden=false
-        NoDisplay=false
-        X-GNOME-Autostart-enabled=true
-        Name[en_US]=Frame Slideshow
-        Name=Frame Slideshow
-        Comment[en_US]=Managed by https://github.com/th7/frame
-        Comment=Managed by https://github.com/th7/frame
+        [Unit]
+        Description=Frame Slideshow
+        After=network-online.target
+
+        [Service]
+        ExecStart=/home/fake-user/frame-slideshow &>> /home/fake-user/frame-slideshow.log
+        Restart=always
+        RestartSec=10
+        User=fake-user
       TEXT
     end
 

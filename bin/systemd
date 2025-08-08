@@ -6,4 +6,4 @@ $LOAD_PATH << lib_path unless $LOAD_PATH.include?(lib_path)
 
 require 'frame/config'
 
-puts Frame::Config.autostart
+puts Frame::Config.systemd

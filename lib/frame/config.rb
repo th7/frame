@@ -24,24 +24,23 @@ module Frame
           "--fullscreen --auto-zoom --randomize --recursive /mnt/#{::File.join(smb_path, sub_path)}"
       end
 
-      # path must match in ./frame
-      def autostart
-        <<~TEXT
-          [Desktop Entry]
-          Type=Application
-          Exec=/home/#{ENV.fetch('USER')}/frame-slideshow &>> /home/#{ENV.fetch('USER')}/frame-slideshow.log
-          Hidden=false
-          NoDisplay=false
-          X-GNOME-Autostart-enabled=true
-          Name[en_US]=Frame Slideshow
-          Name=Frame Slideshow
-          Comment[en_US]=Managed by https://github.com/th7/frame
-          Comment=Managed by https://github.com/th7/frame
-        TEXT
-      end
-
       def load
         JSON.parse(JSON.generate(YAML.load(::File.read('frame.yml'))), symbolize_names: true)
+      end
+
+      # path must match in ./frame
+      def systemd
+        <<~TEXT
+          [Unit]
+          Description=Frame Slideshow
+          After=network-online.target
+
+          [Service]
+          ExecStart=/home/#{ENV.fetch('USER')}/frame-slideshow &>> /home/#{ENV.fetch('USER')}/frame-slideshow.log
+          Restart=always
+          RestartSec=10
+          User=#{ENV.fetch('USER')}
+        TEXT
       end
 
       private
