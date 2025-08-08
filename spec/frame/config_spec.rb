@@ -60,7 +60,7 @@ RSpec.describe Frame::Config do
 
     let(:config) { { source: { smb_server: 'smb.local', smb_share: 'share', path: 'some/path' } } }
     let(:expected) do
-      'feh --auto-rotate --hide-pointer --borderless ' \
+      'DISPLAY=:0 feh --auto-rotate --hide-pointer --borderless ' \
         '--quiet --slideshow-delay 12 --image-bg black ' \
         '--fullscreen --auto-zoom --randomize --recursive /mnt/smb.local/share/some/path'
     end
@@ -82,13 +82,12 @@ RSpec.describe Frame::Config do
         After=network-online.target
 
         [Service]
-        ExecStart=/home/fake-user/frame-slideshow &>> /home/fake-user/frame-slideshow.log
+        ExecStart=/home/fake-user/frame-slideshow
         Restart=always
         RestartSec=10
-        User=fake-user
 
         [Install]
-        WantedBy=multi-user.target
+        WantedBy=default.target
       TEXT
     end
 

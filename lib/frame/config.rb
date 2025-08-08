@@ -19,7 +19,7 @@ module Frame
       end
 
       def slideshow
-        'feh --auto-rotate --hide-pointer --borderless ' \
+        'DISPLAY=:0 feh --auto-rotate --hide-pointer --borderless ' \
           '--quiet --slideshow-delay 12 --image-bg black ' \
           "--fullscreen --auto-zoom --randomize --recursive /mnt/#{::File.join(smb_path, sub_path)}"
       end
@@ -36,13 +36,12 @@ module Frame
           After=network-online.target
 
           [Service]
-          ExecStart=/home/#{ENV.fetch('USER')}/frame-slideshow &>> /home/#{ENV.fetch('USER')}/frame-slideshow.log
+          ExecStart=/home/#{ENV.fetch('USER')}/frame-slideshow
           Restart=always
           RestartSec=10
-          User=#{ENV.fetch('USER')}
 
           [Install]
-          WantedBy=multi-user.target
+          WantedBy=default.target
         TEXT
       end
 
